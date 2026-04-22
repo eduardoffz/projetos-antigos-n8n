@@ -1,234 +1,360 @@
-# 📚 AI Stack Documentation Index
+# 🤖 AI Automation Stack
 
-## 👋 Welcome!
+> **Turnkey Local AI Automation: n8n + Agent Zero + ComfyUI**
 
-This is your complete guide to the AI Automation Stack. Choose the guide that matches your experience level:
-
----
-
-## 🎯 Start Here
-
-### For Complete Beginners
-**Never used Docker or command line before?**
-
-1. 📖 **[EASY-INSTALL.md](EASY-INSTALL.md)** - Start here! (Windows/Mac)
-   - Step-by-step instructions with pictures
-   - Explains everything in simple terms
-   - Includes "what you see" examples
-   - Perfect for first-timers
-
-2. 🐧 **[UBUNTU-INSTALL.md](UBUNTU-INSTALL.md)** - Ubuntu/Linux users start here!
-   - Complete Ubuntu installation guide
-   - Docker setup for Linux
-   - GPU configuration for NVIDIA
-   - Ubuntu-specific troubleshooting
-
-### For Quick Setup
-**Just want to get it running fast?**
-
-2. 🚀 **[QUICK-START.md](QUICK-START.md)** - 3 simple steps
-   - Minimal instructions
-   - Get running in 5 minutes
-   - Perfect for experienced users
+A single-command deployable stack for AI-powered workflow automation with image generation capabilities.
 
 ---
 
-## 📖 Reference Guides
+## 📚 Documentation
 
-### When You Need Help
-**Something not working?**
+**👉 [START HERE: Documentation Index](INDEX.md)** - Choose the right guide for you!
 
-3. 🔧 **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)**
-   - Common problems and solutions
-   - Error message explanations
-   - Step-by-step fixes
-   - Emergency reset instructions
-
-### For Daily Use
-**Need quick commands?**
-
-4. 🎯 **[CHEAT-SHEET.md](CHEAT-SHEET.md)**
-   - All commands in one place
-   - Quick reference table
-   - Print this and keep it handy!
-   - Perfect for daily use
-
-### For Learning
-**Want to understand the system?**
-
-5. 📋 **[SUMMARY.md](SUMMARY.md)**
-   - System overview
-   - Learning path
-   - Use cases and examples
-   - Success checklist
-
-### For Advanced Users
-**Need technical details?**
-
-6. 📘 **[README.md](README.md)**
-   - Complete documentation
-   - API reference
-   - Architecture details
-   - Integration guide
+- **🚀 [QUICK START](QUICK-START.md)** - 3 simple steps to get started
+- **📖 [EASY INSTALL GUIDE](EASY-INSTALL.md)** - Step-by-step for Windows/Mac
+- **🐧 [UBUNTU INSTALL GUIDE](UBUNTU-INSTALL.md)** - Complete guide for Ubuntu/Linux
+- **🔧 [TROUBLESHOOTING](TROUBLESHOOTING.md)** - Fix common problems
+- **📋 [SUMMARY](SUMMARY.md)** - Overview &amp; learning path
+- **🎯 [CHEAT SHEET](CHEAT-SHEET.md)** - Quick reference (print this!)
+- **📘 Full Documentation** - You're reading it now!
 
 ---
 
-## 🗺️ Suggested Reading Order
+## 🎯 What's Included
 
-### Day 1: Installation
-```
-1. QUICK-START.md (or EASY-INSTALL.md if you're new)
-2. Get the stack running
-3. Open all three services in browser
+| Service | Purpose | Port | URL |
+|---------|---------|------|-----|
+| **n8n** | Workflow automation engine (the conductor) | 5678 | http://localhost:5678 |
+| **Agent Zero** | AI agent runtime & planning UI | 50080 | http://localhost:50080 |
+| **ComfyUI** | AI image/video generation | 8188 | http://localhost:8188 |
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running
+- (Optional) NVIDIA GPU with [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) for GPU acceleration
+
+### One-Command Launch
+
+**Windows (PowerShell):**
+```powershell
+.\start.ps1
 ```
 
-### Day 2: First Steps
-```
-1. SUMMARY.md - Understand what you have
-2. Import test workflow
-3. Generate your first image
-```
-
-### Day 3: Learning
-```
-1. README.md - Learn the details
-2. Experiment with workflows
-3. Try different prompts
+**Linux/macOS:**
+```bash
+chmod +x start.sh
+./start.sh
 ```
 
-### Ongoing: Reference
+That's it! The script will:
+1. ✅ Check Docker is installed and running
+2. ✅ Detect GPU availability
+3. ✅ Create all necessary directories
+4. ✅ Pull the latest images
+5. ✅ Start all services
+6. ✅ Display access URLs
+
+---
+
+## 📁 Directory Structure
+
 ```
-1. CHEAT-SHEET.md - Keep this handy
-2. TROUBLESHOOTING.md - When things break
-3. README.md - When you need details
+ai-stack/
+├── docker-compose.yml      # Main stack configuration
+├── .env                    # Environment variables
+├── start.ps1               # Windows startup script
+├── start.sh                # Linux/macOS startup script
+├── README.md               # This file
+│
+├── data/                   # Persistent data (auto-created)
+│   ├── n8n/                # n8n workflows & credentials
+│   └── agent-zero/         # Agent Zero data
+│
+├── shared/                 # Shared between all services
+│   ├── comfyui/
+│   │   ├── models/         # AI models (checkpoints, LoRAs, etc.)
+│   │   │   ├── checkpoints/
+│   │   │   ├── loras/
+│   │   │   ├── vae/
+│   │   │   ├── controlnet/
+│   │   │   └── embeddings/
+│   │   ├── output/         # Generated images
+│   │   ├── input/          # Input images
+│   │   └── custom_nodes/   # ComfyUI extensions
+│   └── workflows/          # Shared workflow files
+│
+└── workflows/              # Pre-built n8n workflows
+    ├── comfyui-image-generation.json
+    └── comfyui-simple-test.json
 ```
 
 ---
 
-## 📊 Documentation Overview
+## 🔧 Commands
 
-| Document | Length | Difficulty | Purpose |
-|----------|--------|------------|---------|
-| **QUICK-START.md** | 1 page | ⭐ Easy | Get running fast |
-| **EASY-INSTALL.md** | 5 pages | ⭐ Easy | Detailed beginner guide |
-| **CHEAT-SHEET.md** | 3 pages | ⭐⭐ Medium | Quick reference |
-| **TROUBLESHOOTING.md** | 4 pages | ⭐⭐ Medium | Fix problems |
-| **SUMMARY.md** | 4 pages | ⭐⭐ Medium | Overview & learning |
-| **README.md** | 8 pages | ⭐⭐⭐ Advanced | Complete documentation |
+### Windows (PowerShell)
 
----
-
-## 🎓 By Experience Level
-
-### 🌱 Beginner (Never used Docker)
-```
-1. EASY-INSTALL.md     ← Start here
-2. TROUBLESHOOTING.md  ← If problems
-3. CHEAT-SHEET.md      ← Print this
-4. SUMMARY.md          ← Learn more
+```powershell
+.\start.ps1              # Start the stack
+.\start.ps1 -Stop        # Stop the stack
+.\start.ps1 -Logs        # View logs
+.\start.ps1 -Status      # Check status
+.\start.ps1 -NoPull      # Start without pulling images
+.\start.ps1 -CPU         # Force CPU mode (no GPU)
 ```
 
-### 🌿 Intermediate (Used Docker before)
-```
-1. QUICK-START.md      ← Get running
-2. SUMMARY.md          ← Understand system
-3. CHEAT-SHEET.md      ← Daily reference
-4. README.md           ← Deep dive
+### Linux/macOS
+
+```bash
+./start.sh               # Start the stack
+./start.sh --stop        # Stop the stack
+./start.sh --logs        # View logs
+./start.sh --status      # Check status
+./start.sh --no-pull     # Start without pulling images
+./start.sh --cpu         # Force CPU mode (no GPU)
 ```
 
-### 🌳 Advanced (Know Docker well)
-```
-1. README.md           ← Full docs
-2. docker-compose.yml  ← Customize
-3. CHEAT-SHEET.md      ← Quick ref
+### Docker Compose (Direct)
+
+```bash
+docker compose up -d     # Start
+docker compose down      # Stop
+docker compose logs -f   # View logs
+docker compose ps        # Status
 ```
 
 ---
 
-## 🎯 By Goal
+## 🎨 Adding Models to ComfyUI
 
-### "I just want it to work"
-→ **QUICK-START.md** or **EASY-INSTALL.md**
+Place your models in the appropriate directories:
 
-### "Something's broken"
-→ **TROUBLESHOOTING.md**
+| Model Type | Directory |
+|------------|-----------|
+| Stable Diffusion checkpoints | `shared/comfyui/models/checkpoints/` |
+| LoRA models | `shared/comfyui/models/loras/` |
+| VAE models | `shared/comfyui/models/vae/` |
+| ControlNet models | `shared/comfyui/models/controlnet/` |
+| Upscale models | `shared/comfyui/models/upscale_models/` |
+| Embeddings | `shared/comfyui/models/embeddings/` |
 
-### "How do I use this?"
-→ **SUMMARY.md** → **README.md**
+### Recommended Starter Model
 
-### "What's the command for...?"
-→ **CHEAT-SHEET.md**
-
-### "I want to understand everything"
-→ **README.md** → **docker-compose.yml**
-
----
-
-## 📱 Quick Links
-
-### Services
-- n8n: http://localhost:5678
-- Agent Zero: http://localhost:50080
-- ComfyUI: http://localhost:8188
-
-### GitHub
-- Branch: https://github.com/insomniakin/n8n-workflows/tree/feature/ai-automation-stack
-- Create PR: https://github.com/insomniakin/n8n-workflows/pull/new/feature/ai-automation-stack
-
-### External Resources
-- n8n Docs: https://docs.n8n.io
-- ComfyUI GitHub: https://github.com/comfyanonymous/ComfyUI
-- Agent Zero GitHub: https://github.com/frdel/agent-zero
-- Docker Desktop: https://www.docker.com/products/docker-desktop
+Download [SD 1.5](https://huggingface.co/runwayml/stable-diffusion-v1-5/blob/main/v1-5-pruned-emaonly.safetensors) and place it in `shared/comfyui/models/checkpoints/`.
 
 ---
 
-## 🆘 Still Lost?
+## 📊 Pre-built Workflows
 
-### If you're not sure where to start:
+### 1. ComfyUI Image Generation Pipeline
 
-**Complete Beginner?**
-→ Read **EASY-INSTALL.md** from start to finish
+**File:** `workflows/comfyui-image-generation.json`
 
-**Experienced User?**
-→ Run **QUICK-START.md** steps, then read **SUMMARY.md**
+A complete webhook-triggered image generation pipeline:
 
-**Something Broken?**
-→ Check **TROUBLESHOOTING.md** first
+1. Import the workflow into n8n
+2. Activate the workflow
+3. Send a POST request:
 
-**Need a Command?**
-→ Look in **CHEAT-SHEET.md**
-
----
-
-## 💡 Pro Tips
-
-1. **Print CHEAT-SHEET.md** - Keep it by your computer
-2. **Bookmark this INDEX.md** - Quick navigation
-3. **Start with EASY-INSTALL.md** - Even if you're experienced
-4. **Read SUMMARY.md** - Understand the big picture
-5. **Keep TROUBLESHOOTING.md** handy - You'll need it eventually
-
----
-
-## ✅ Success Path
-
-```
-┌─────────────────────────────────────────────────────────┐
-│  1. Read EASY-INSTALL.md or QUICK-START.md             │
-│  2. Install Docker Desktop                              │
-│  3. Run the start script                                │
-│  4. Open all three services                             │
-│  5. Import test workflow                                │
-│  6. Generate first image                                │
-│  7. Read SUMMARY.md to learn more                       │
-│  8. Build your own workflows                            │
-│  9. Share your creations!                               │
-└─────────────────────────────────────────────────────────┘
+```bash
+curl -X POST http://localhost:5678/webhook/generate-image \
+  -H "Content-Type: application/json" \
+  -d '{
+    "prompt": "a cyberpunk city at night, neon lights, rain, highly detailed",
+    "negative_prompt": "blurry, low quality",
+    "steps": 20,
+    "cfg": 7,
+    "width": 512,
+    "height": 512
+  }'
 ```
 
+### 2. ComfyUI Simple Test
+
+**File:** `workflows/comfyui-simple-test.json`
+
+A simple connectivity test:
+
+1. Import and activate in n8n
+2. Visit: http://localhost:5678/webhook/comfyui-status
+3. Should return ComfyUI system stats
+
 ---
 
-**🎉 You've got this! Pick a guide and get started!**
+## 🔗 Integration Architecture
 
-*Remember: Everyone starts as a beginner. Take your time, follow the steps, and don't be afraid to ask for help!*
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         n8n (Conductor)                         │
+│                      http://localhost:5678                      │
+└─────────────────────┬───────────────────────┬───────────────────┘
+                      │                       │
+                      ▼                       ▼
+┌─────────────────────────────┐ ┌─────────────────────────────────┐
+│       Agent Zero            │ │           ComfyUI               │
+│   http://localhost:50080    │ │     http://localhost:8188       │
+│                             │ │                                 │
+│  • AI planning/reasoning    │ │  • POST /prompt (queue job)     │
+│  • Tool use decisions       │ │  • GET /history/{id} (results)  │
+│  • Prompt optimization      │ │  • GET /view (retrieve images)  │
+└─────────────────────────────┘ └─────────────────────────────────┘
+                      │                       │
+                      └───────────┬───────────┘
+                                  ▼
+                    ┌─────────────────────────┐
+                    │    Shared Volume        │
+                    │      ./shared/          │
+                    │                         │
+                    │  • ComfyUI outputs      │
+                    │  • Shared workflows     │
+                    │  • Cross-service data   │
+                    └─────────────────────────┘
+```
+
+### Typical Workflow Loop
+
+1. **Trigger**: n8n receives webhook/schedule/event
+2. **Plan** (optional): n8n calls Agent Zero for decision-making
+3. **Generate**: n8n submits workflow to ComfyUI `POST /prompt`
+4. **Poll**: n8n checks `GET /history/{prompt_id}` until complete
+5. **Deliver**: n8n retrieves output and sends to destination
+
+---
+
+## 🌐 ComfyUI API Reference
+
+### Queue a Generation
+
+```bash
+POST http://comfyui:8188/prompt
+Content-Type: application/json
+
+{
+  "prompt": { /* ComfyUI workflow JSON */ }
+}
+```
+
+**Response:**
+```json
+{
+  "prompt_id": "abc123-def456-..."
+}
+```
+
+### Check Status
+
+```bash
+GET http://comfyui:8188/history/{prompt_id}
+```
+
+### Get Queue Status
+
+```bash
+GET http://comfyui:8188/queue
+```
+
+### Retrieve Generated Image
+
+```bash
+GET http://comfyui:8188/view?filename={name}&subfolder=&type=output
+```
+
+### System Stats
+
+```bash
+GET http://comfyui:8188/system_stats
+```
+
+---
+
+## ⚙️ Configuration
+
+### Environment Variables (.env)
+
+```bash
+# Timezone
+TZ=America/Los_Angeles
+
+# n8n Basic Auth (optional)
+N8N_BASIC_AUTH_ACTIVE=false
+N8N_BASIC_AUTH_USER=admin
+N8N_BASIC_AUTH_PASSWORD=changeme
+
+# API Keys for Agent Zero (optional)
+OPENAI_API_KEY=sk-your-key-here
+ANTHROPIC_API_KEY=sk-ant-your-key-here
+```
+
+### Custom Webhook URL
+
+If running behind a reverse proxy:
+
+```bash
+WEBHOOK_URL=https://your-domain.com
+```
+
+---
+
+## 🔒 Security Notes
+
+- By default, all services are only accessible on localhost
+- For production deployment, add a reverse proxy (Traefik/Caddy/nginx)
+- Enable n8n basic auth for any non-local deployment
+- Keep API keys in `.env` file (not committed to git)
+
+---
+
+## 🐛 Troubleshooting
+
+### ComfyUI can't see GPU
+
+1. Ensure NVIDIA drivers are installed
+2. Install [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)
+3. Restart Docker Desktop
+4. Run `docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi` to test
+
+### Services won't start
+
+```bash
+# Check logs
+docker compose logs -f
+
+# Restart specific service
+docker compose restart n8n
+
+# Full reset
+docker compose down -v
+docker compose up -d
+```
+
+### n8n can't connect to ComfyUI
+
+- Use `http://comfyui:8188` (Docker internal network), not `localhost`
+- Ensure ComfyUI container is healthy: `docker compose ps`
+
+### Port conflicts
+
+Edit `docker-compose.yml` to change port mappings:
+```yaml
+ports:
+  - "NEW_PORT:INTERNAL_PORT"
+```
+
+---
+
+## 📚 Resources
+
+- [n8n Documentation](https://docs.n8n.io/)
+- [Agent Zero GitHub](https://github.com/frdel/agent-zero)
+- [ComfyUI GitHub](https://github.com/comfyanonymous/ComfyUI)
+- [ComfyUI API Examples](https://github.com/comfyanonymous/ComfyUI/blob/master/script_examples/basic_api_example.py)
+
+---
+
+## 📄 License
+
+MIT License - Use freely for personal and commercial projects.

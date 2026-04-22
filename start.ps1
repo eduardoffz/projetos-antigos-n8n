@@ -1,213 +1,416 @@
-# 📋 AI Stack Summary
+# 🐧 Ubuntu Installation Guide
+## AI Automation Stack for Ubuntu/Linux
 
-## What You Get
+---
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    🤖 AI AUTOMATION STACK                   │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  📊 n8n                    🤖 Agent Zero      🎨 ComfyUI   │
-│  Port 5678                 Port 50080         Port 8188    │
-│  Workflow Engine           AI Agent           Image Gen    │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+## ✅ Step 1: Install Docker on Ubuntu
 
-## 📁 Files Included
+### Open Terminal
+Press `Ctrl + Alt + T` to open Terminal
 
-```
-ai-stack/
-│
-├── 📘 QUICK-START.md          ← Start here! (3 simple steps)
-├── 📖 EASY-INSTALL.md         ← Detailed guide with pictures
-├── 🔧 TROUBLESHOOTING.md      ← Fix problems
-├── 📚 README.md               ← Full documentation
-│
-├── 🐳 docker-compose.yml      ← Stack configuration
-├── ⚙️  .env                    ← Settings
-├── 🪟 start.ps1               ← Windows launcher
-├── 🐧 start.sh                ← Mac/Linux launcher
-│
-└── workflows/
-    ├── comfyui-image-generation.json  ← Full image pipeline
-    └── comfyui-simple-test.json       ← Test connection
+### Check if Docker is Already Installed
+```bash
+docker --version
 ```
 
-## 🎯 Quick Reference
+If you see a version number, skip to Step 2. Otherwise, continue:
 
-### Start the Stack
+### Install Docker
+Copy and paste these commands one at a time:
 
-**Windows:**
-```powershell
-.\start.ps1
+```bash
+# Update package list
+sudo apt update
+
+# Install required packages
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+
+# Add Docker's official GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+# Add Docker repository
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Update package list again
+sudo apt update
+
+# Install Docker
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+# Add your user to docker group (so you don't need sudo)
+sudo usermod -aG docker $USER
+
+# Apply the new group membership
+newgrp docker
 ```
 
-**Mac/Linux:**
+### Verify Docker Installation
+```bash
+docker --version
+docker compose version
+```
+
+You should see version numbers for both.
+
+---
+
+## 📥 Step 2: Download the AI Stack
+
+### Option A: Using Git (Recommended)
+```bash
+# Install git if you don't have it
+sudo apt install -y git
+
+# Clone the repository
+git clone https://github.com/insomniakin/n8n-workflows.git
+
+# Go to the ai-stack folder
+cd n8n-workflows/ai-stack
+```
+
+### Option B: Download ZIP
+```bash
+# Install wget and unzip if you don't have them
+sudo apt install -y wget unzip
+
+# Download the repository
+wget https://github.com/insomniakin/n8n-workflows/archive/refs/heads/feature/ai-automation-stack.zip
+
+# Unzip it
+unzip feature/ai-automation-stack.zip
+
+# Go to the ai-stack folder
+cd n8n-workflows-feature-ai-automation-stack/ai-stack
+```
+
+---
+
+## 🚀 Step 3: Start the AI Stack
+
+### Make the Script Executable
+```bash
+chmod +x start.sh
+```
+
+### Run the Stack
 ```bash
 ./start.sh
 ```
 
-### Access the Services
+### What You'll See
+The script will:
+1. ✓ Check Docker is installed
+2. ✓ Check Docker is running
+3. ✓ Detect your GPU (if you have NVIDIA)
+4. ✓ Create necessary folders
+5. ✓ Pull Docker images (this takes 5-10 minutes first time)
+6. ✓ Start all services
 
-| Service | URL | What it does |
-|---------|-----|--------------|
-| n8n | http://localhost:5678 | Create automated workflows |
-| Agent Zero | http://localhost:50080 | AI assistant and planning |
-| ComfyUI | http://localhost:8188 | Generate images with AI |
-
-### Stop the Stack
-
-**Windows:**
-```powershell
-.\start.ps1 -Stop
+### Wait for Success Message
+```
+🎉 AI Stack is running!
 ```
 
-**Mac/Linux:**
+---
+
+## 🌐 Step 4: Open the Services
+
+Open your web browser (Firefox, Chrome, etc.) and go to:
+
+### n8n (Workflow Automation)
+```
+http://localhost:5678
+```
+
+### Agent Zero (AI Assistant)
+```
+http://localhost:50080
+```
+
+### ComfyUI (Image Generation)
+```
+http://localhost:8188
+```
+
+---
+
+## 🎮 Quick Commands
+
+### Start the Stack
+```bash
+./start.sh
+```
+
+### Stop the Stack
 ```bash
 ./start.sh --stop
 ```
 
-## 🎓 Learning Path
+### Check Status
+```bash
+./start.sh --status
+```
 
-### Day 1: Get it Running
-1. Read **QUICK-START.md**
-2. Install Docker
-3. Run the stack
-4. Open all three services in your browser
+### View Logs
+```bash
+./start.sh --logs
+```
 
-### Day 2: Test ComfyUI
-1. Import **comfyui-simple-test.json** into n8n
-2. Activate the workflow
-3. Visit: http://localhost:5678/webhook/comfyui-status
-4. See if ComfyUI is connected
+### Force CPU Mode (No GPU)
+```bash
+./start.sh --cpu
+```
 
-### Day 3: Generate Your First Image
-1. Import **comfyui-image-generation.json** into n8n
-2. Activate the workflow
-3. Send a test request (see README.md for example)
-4. Get your first AI-generated image!
+---
 
-### Day 4+: Build Your Own Workflows
-1. Learn n8n basics
-2. Experiment with different prompts
-3. Connect to other services
-4. Automate your creative process
+## 🔧 Ubuntu-Specific Troubleshooting
 
-## 💡 Use Cases
+### Problem: "Permission denied" when running docker
 
-### What Can You Do With This?
+**Solution:**
+```bash
+# Add yourself to docker group
+sudo usermod -aG docker $USER
 
-1. **Automated Image Generation**
-   - Schedule daily artwork creation
-   - Generate images from RSS feeds
-   - Create social media content automatically
+# Log out and log back in, or run:
+newgrp docker
 
-2. **AI-Powered Workflows**
-   - Let Agent Zero plan complex tasks
-   - Use n8n to execute the plans
-   - Generate visual content with ComfyUI
+# Try again
+./start.sh
+```
 
-3. **Creative Automation**
-   - Batch process images
-   - Create variations of designs
-   - Generate assets for projects
+### Problem: "Cannot connect to Docker daemon"
 
-4. **Learning & Experimentation**
-   - Learn workflow automation
-   - Experiment with AI image generation
-   - Build custom integrations
+**Solution:**
+```bash
+# Start Docker service
+sudo systemctl start docker
+
+# Enable Docker to start on boot
+sudo systemctl enable docker
+
+# Check status
+sudo systemctl status docker
+```
+
+### Problem: Port already in use
+
+**Solution:**
+```bash
+# Find what's using the port
+sudo lsof -i :5678
+sudo lsof -i :8188
+sudo lsof -i :50080
+
+# Kill the process (replace PID with actual number)
+sudo kill -9 PID
+
+# Or just restart
+sudo reboot
+```
+
+### Problem: Not enough disk space
+
+**Solution:**
+```bash
+# Check disk space
+df -h
+
+# Clean up Docker
+docker system prune -a
+
+# Clean up apt cache
+sudo apt clean
+sudo apt autoremove
+```
+
+### Problem: NVIDIA GPU not detected
+
+**Solution:**
+```bash
+# Install NVIDIA drivers
+sudo ubuntu-drivers autoinstall
+
+# Install NVIDIA Container Toolkit
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+sudo apt update
+sudo apt install -y nvidia-container-toolkit
+
+# Restart Docker
+sudo systemctl restart docker
+
+# Test GPU
+docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
+```
+
+---
+
+## 🔥 Firewall Configuration (Optional)
+
+If you want to access from other computers on your network:
+
+```bash
+# Allow ports through firewall
+sudo ufw allow 5678/tcp
+sudo ufw allow 8188/tcp
+sudo ufw allow 50080/tcp
+
+# Enable firewall if not already enabled
+sudo ufw enable
+
+# Check status
+sudo ufw status
+```
+
+---
 
 ## 📊 System Requirements
 
 ### Minimum (CPU Mode)
-- **RAM:** 8 GB
-- **Disk:** 20 GB free space
-- **CPU:** Any modern processor
-- **OS:** Windows 10+, macOS 10.15+, or Linux
+- Ubuntu 20.04 or newer
+- 8 GB RAM
+- 20 GB free disk space
+- Any modern CPU
 
 ### Recommended (GPU Mode)
-- **RAM:** 16 GB
-- **Disk:** 50 GB free space (for models)
-- **GPU:** NVIDIA GPU with 6+ GB VRAM
-- **OS:** Windows 10+, Linux (macOS doesn't support NVIDIA)
-
-## 🔐 Security Notes
-
-### Default Setup (Safe for Local Use)
-- All services only accessible from your computer
-- No external access by default
-- No authentication required (local only)
-
-### If You Want to Share (Advanced)
-- Add reverse proxy (Traefik/Caddy)
-- Enable n8n authentication
-- Use HTTPS certificates
-- Configure firewall rules
-
-**⚠️ Don't expose to internet without security!**
-
-## 🆘 Quick Help
-
-### Something Not Working?
-
-1. **Check Docker is running** (look for whale icon 🐳)
-2. **Read TROUBLESHOOTING.md**
-3. **Check the logs:**
-   - Windows: `.\start.ps1 -Logs`
-   - Mac/Linux: `./start.sh --logs`
-
-### Common Issues
-
-| Problem | Quick Fix |
-|---------|-----------|
-| Docker not found | Install Docker Desktop |
-| Port in use | Restart computer |
-| Permission denied | Run as administrator (Windows) or use `chmod +x` (Mac) |
-| Can't connect | Wait 2 minutes for services to start |
-
-## 📈 What's Next?
-
-### After You Get It Running
-
-1. **Explore n8n**
-   - Try the built-in templates
-   - Connect to your favorite services
-   - Build your first workflow
-
-2. **Download Models for ComfyUI**
-   - Get Stable Diffusion models
-   - Try different styles
-   - Experiment with LoRAs
-
-3. **Learn Agent Zero**
-   - Ask it questions
-   - Let it help plan workflows
-   - Integrate with n8n
-
-4. **Join Communities**
-   - n8n Community Forum
-   - ComfyUI Discord
-   - Agent Zero GitHub
-
-## 🎉 Success Checklist
-
-- [ ] Docker Desktop installed and running
-- [ ] AI Stack downloaded and extracted
-- [ ] Start script executed successfully
-- [ ] All three services accessible in browser
-- [ ] Test workflow imported and working
-- [ ] First image generated successfully
-
-**Once you check all these boxes, you're ready to build amazing things! 🚀**
+- Ubuntu 20.04 or newer
+- 16 GB RAM
+- 50 GB free disk space
+- NVIDIA GPU with 6+ GB VRAM
+- NVIDIA drivers installed
 
 ---
 
-## 📞 Need Help?
+## 🆘 Quick Help Commands
 
-- **Quick Start:** Read QUICK-START.md
-- **Detailed Guide:** Read EASY-INSTALL.md
-- **Problems:** Read TROUBLESHOOTING.md
-- **Full Docs:** Read README.md
+### Check Docker Status
+```bash
+sudo systemctl status docker
+```
 
-**Remember:** Everyone starts as a beginner. Take your time, follow the steps, and don't be afraid to ask for help! 💪
+### Check Running Containers
+```bash
+docker ps
+```
+
+### Check Docker Logs
+```bash
+docker compose logs -f
+```
+
+### Restart Everything
+```bash
+./start.sh --stop
+docker system prune -f
+./start.sh
+```
+
+### Complete Reset (Deletes All Data!)
+```bash
+./start.sh --stop
+docker compose down -v
+rm -rf data/ shared/
+./start.sh
+```
+
+---
+
+## 💡 Ubuntu Pro Tips
+
+### 1. Create Desktop Shortcuts
+
+Create a file `~/Desktop/ai-stack.desktop`:
+```bash
+cat > ~/Desktop/ai-stack.desktop << 'EOF'
+[Desktop Entry]
+Type=Application
+Name=AI Stack
+Comment=Start AI Automation Stack
+Exec=gnome-terminal -- bash -c "cd ~/n8n-workflows/ai-stack && ./start.sh; exec bash"
+Icon=applications-internet
+Terminal=true
+EOF
+
+chmod +x ~/Desktop/ai-stack.desktop
+```
+
+### 2. Auto-Start on Boot
+
+```bash
+# Create systemd service
+sudo nano /etc/systemd/system/ai-stack.service
+```
+
+Paste this:
+```ini
+[Unit]
+Description=AI Automation Stack
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/home/YOUR_USERNAME/n8n-workflows/ai-stack
+ExecStart=/home/YOUR_USERNAME/n8n-workflows/ai-stack/start.sh
+ExecStop=/home/YOUR_USERNAME/n8n-workflows/ai-stack/start.sh --stop
+User=YOUR_USERNAME
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Replace `YOUR_USERNAME` with your actual username, then:
+```bash
+sudo systemctl enable ai-stack
+sudo systemctl start ai-stack
+```
+
+### 3. Monitor Resources
+
+```bash
+# Install htop for better monitoring
+sudo apt install -y htop
+
+# Watch Docker stats
+docker stats
+
+# Watch GPU usage (if NVIDIA)
+watch -n 1 nvidia-smi
+```
+
+---
+
+## ✅ Success Checklist
+
+- [ ] Docker installed and running
+- [ ] Repository downloaded
+- [ ] In the ai-stack folder
+- [ ] start.sh is executable
+- [ ] Script ran successfully
+- [ ] All three URLs open in browser
+- [ ] n8n shows welcome screen
+- [ ] ComfyUI shows interface
+- [ ] Agent Zero shows chat
+
+---
+
+## 🎉 You're All Set!
+
+Your AI Automation Stack is now running on Ubuntu!
+
+### Next Steps:
+1. Import the test workflow: `workflows/comfyui-simple-test.json`
+2. Try generating your first image
+3. Read SUMMARY.md to learn more
+4. Build your own workflows!
+
+### Need More Help?
+- **General Guide:** README.md
+- **Troubleshooting:** TROUBLESHOOTING.md
+- **Quick Reference:** CHEAT-SHEET.md
+
+**Happy automating! 🚀**

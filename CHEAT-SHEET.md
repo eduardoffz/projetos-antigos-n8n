@@ -1,77 +1,20 @@
-{
-  "id": "112",
-  "name": "Receive updates when a new account is added by an admin in ActiveCampaign",
-  "nodes": [
-    {
-      "name": "ActiveCampaign Trigger",
-      "type": "n8n-nodes-base.activeCampaignTrigger",
-      "position": [
-        700,
-        250
-      ],
-      "parameters": {
-        "events": [
-          "account_add"
-        ],
-        "sources": [
-          "admin"
-        ]
-      },
-      "credentials": {
-        "activeCampaignApi": ""
-      },
-      "typeVersion": 1,
-      "id": "fd48629a-cf31-40ae-949e-88709ffb5003",
-      "notes": "This activeCampaignTrigger node performs automated tasks as part of the workflow."
-    },
-    {
-      "id": "error-2d94cea0",
-      "name": "Error Handler",
-      "type": "n8n-nodes-base.stopAndError",
-      "typeVersion": 1,
-      "position": [
-        1000,
-        400
-      ],
-      "parameters": {
-        "message": "Workflow execution error",
-        "options": {}
-      }
-    }
-  ],
-  "active": false,
-  "settings": {
-    "executionOrder": "v1",
-    "saveManualExecutions": true,
-    "callerPolicy": "workflowsFromSameOwner",
-    "errorWorkflow": null,
-    "timezone": "UTC",
-    "executionTimeout": 3600,
-    "maxExecutions": 1000,
-    "retryOnFail": true,
-    "retryCount": 3,
-    "retryDelay": 1000
-  },
-  "connections": {},
-  "description": "Automated workflow: Receive updates when a new account is added by an admin in ActiveCampaign. This workflow processes data and performs automated tasks.",
-  "meta": {
-    "instanceId": "workflow-96bbd230",
-    "versionId": "1.0.0",
-    "createdAt": "2025-09-29T07:07:41.862892",
-    "updatedAt": "2025-09-29T07:07:41.863096",
-    "owner": "n8n-user",
-    "license": "MIT",
-    "category": "automation",
-    "status": "active",
-    "priority": "high",
-    "environment": "production"
-  },
-  "tags": [
-    "automation",
-    "n8n",
-    "production-ready",
-    "excellent",
-    "optimized"
-  ],
-  "notes": "Excellent quality workflow: Receive updates when a new account is added by an admin in ActiveCampaign. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
-}
+# =============================================================================
+# AI Stack Environment Configuration
+# =============================================================================
+
+# Timezone (used by all services)
+TZ=America/Los_Angeles
+
+# n8n Configuration
+N8N_BASIC_AUTH_ACTIVE=false
+N8N_BASIC_AUTH_USER=admin
+N8N_BASIC_AUTH_PASSWORD=changeme
+
+# Optional: External webhook URL (if behind reverse proxy)
+# WEBHOOK_URL=https://your-domain.com
+
+# Optional: OpenAI API Key (for Agent Zero)
+# OPENAI_API_KEY=sk-your-key-here
+
+# Optional: Anthropic API Key (for Agent Zero)
+# ANTHROPIC_API_KEY=sk-ant-your-key-here
